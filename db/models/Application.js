@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const AppSchema = new Schema({
-
     jobId : {
          type: Schema.Types.ObjectId,
         ref: 'job'
@@ -14,7 +13,7 @@ const AppSchema = new Schema({
     },
 
     teqSkill: {
-        type: [striSg],
+        type: [String],
         required: true
     },
     softskill: {
@@ -24,7 +23,6 @@ const AppSchema = new Schema({
 
     userResume : {
         type: String,
-        required: true
     }
 
 }, { versionKey: false, timestamps: true });

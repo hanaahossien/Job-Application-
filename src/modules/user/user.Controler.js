@@ -75,7 +75,7 @@ export const updateAccount = asynchandler(async (req, res, next) => {
 
 
     if (!checkNewEmail && !checkmoNum) {
-        const { _id } = req.authUser;
+        const { _id } = req.user;
 
         const user = await usermodel.findByIdAndUpdate({ _id }, newdata, { new: true });
 

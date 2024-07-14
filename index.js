@@ -4,6 +4,7 @@ import { userRouter } from './src/modules/user/user.Router.js'
 import { comRouter } from './src/modules/companey/companey.Router.js'
 import { jobRouter } from './src/modules/Job/job.Router.js'
 import { config } from 'dotenv'
+import { applicationRouter } from './src/modules/application/application.Router.js'
 
 
 config();
@@ -17,6 +18,8 @@ conectedDb()
 
 
 app.use(express.json())
+
+app.use('/application', applicationRouter)
 
 app.use('/user', userRouter)
 

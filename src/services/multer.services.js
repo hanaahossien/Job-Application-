@@ -1,26 +1,35 @@
 import multer from 'multer';
-
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads')
-    },
-    filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
-    }
-  })
-
-
-  function fileFilter (req, file, cb) {
-
-    
-    cb(null, false)
+import { v4 as uuidv4 } from 'uuid';
+const MIME_TYPES = {
+    "image/jpg": "jpg",
+    "image/jpeg": "jpg",
+    "image/png": "png",
+    "image/gif": "gif",
+  };
   
-    cb(null, true)
-  
-    cb(new Error('I don\'t have a clue!'))
-  
-  }
-  
-  const upload = multer({ storage: storage })
+export const multerlocal = () => {
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, 'uploads/')
+        },
+        filename: function (req, file, cb) {
+            cb(null, uuidv4() + '_' + file.originalname)
+        }
+
+    })
+
+    const fileFilter = (req, file, cb) => {
+        if (!MIME_TYPES[file.mimetype]) {
+          cb(new Error("upload image only", { cause: 400 }), false);
+        } else {
+          cb(null, true);
+        }
+      };
+
+
+    const upload = multer({ fileFilter, storage })
+    return upload
+}
+
+
+
